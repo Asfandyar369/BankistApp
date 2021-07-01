@@ -634,3 +634,62 @@ labelBalance.addEventListener('click', function () {
 
   console.log(movementUI);
 })
+
+
+// EXCERCISE # 1
+// First method where we use map and flat individually
+//const bankDepositSum = accounts.map(acc => acc.movements).flat();
+
+//second method where we use flat mao together
+const bankDepositSum = accounts.flatMap(acc => acc.movements).flat()
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+
+console.log(bankDepositSum);
+
+// EXCERCISE # 2
+
+// const numDeposit1000 = accounts.flatMap(acc => acc.movements)
+//   .filter(mov => mov >= 1000).length;
+// use reduce method 
+
+
+const numDeposit1000 = accounts.flatMap(acc => acc.movements)
+  // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0); //also do the same with ++ operator
+  .reduce(
+    (count, cur) => (cur >= 1000 ? ++count : count), 0); //count++ perform the function but return the previous value alwasy that is why we use prefer ++ like (++count)
+
+console.log(numDeposit1000);
+
+// let a =10;
+// console.log(a++); //it will return 10 but a is 11
+// console.log(++a); //now it will return 11.
+
+// EXCERCISE # 3
+
+const { deposits, withdrawals } = accounts.flatMap(acc => acc.movements)
+  .reduce(
+    (sum, cur) => {
+      // when we use {} we should explesitly returns value
+      // cur > 0 ? sum.deposits += cur : sum.withdrawals += cur; // we can do with  other way
+      sum[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sum;
+    }, { deposits: 0, withdrawals: 0 });
+
+console.log(deposits, withdrawals);
+
+
+// EXCERCISE # 4
+
+//this is a nice title ==> This Is a Nice Title
+
+const convertTitleCase = function (title) {
+  const exceptions = ['in', 'is', 'a', 'an', 'the', 'but', 'or', 'on', 'with'];
+
+  const titleConvert = title.toLowerCase().split(' ');
+  return titleConvert;
+}
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
